@@ -6,15 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.rachellima.basiccompose.ui.theme.BasicComposeTheme
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +41,18 @@ data class Message(
 
 @Composable
 fun MessageCard(msg: Message) {
-    Row { // horizontal
-        Image(
+    Row(modifier = Modifier.padding(all = 18.dp)) { // horizontal
+        Image( // added image
             painter = painterResource(R.drawable.avatar),
-            contentDescription = "Foto para Contato"
+            contentDescription = "Foto para Contato",
+            modifier = Modifier
+                .size(45.dp)
+                .clip(CircleShape)
         )
+        Spacer(modifier = Modifier.width(20.dp))
         Column { // vertical
             Text(text = msg.author)
+            Spacer(modifier = Modifier.height(10.dp)) // space between items
             Text(text = msg.body)
         }
     }
