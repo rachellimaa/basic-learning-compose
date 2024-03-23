@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -39,11 +41,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             BasicComposeTheme {
                 Surface(Modifier.fillMaxSize()) {
-                    MessageCard(
-                        msg = Message(
-                            "Author", "Aprendendo compose no Android"
-                        )
-                    )
+                    BasicComposeTheme {
+                        Conversation(messages = SampleData.conversationSample)
+                    }
                 }
             }
         }
@@ -69,6 +69,10 @@ fun MessageCard(msg: Message) {
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 var isExpanded by remember { mutableStateOf(false) }
+                val surfaceColor by animateColorAsState(
+                    if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+                    label = "change color"
+                )
 
                 Column(modifier = Modifier.clickable {
                     isExpanded = !isExpanded
@@ -81,7 +85,10 @@ fun MessageCard(msg: Message) {
                     )
                     Spacer(modifier = Modifier.height(10.dp)) // space between items
                     Surface(
-                        shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp
+                        shape = MaterialTheme.shapes.medium,
+                        shadowElevation = 1.dp,
+                        color = surfaceColor,
+                        modifier = Modifier.animateContentSize().padding(4.dp)
                     ) {
                         Text(
                             text = msg.body,
