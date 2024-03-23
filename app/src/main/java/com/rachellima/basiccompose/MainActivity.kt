@@ -33,8 +33,7 @@ class MainActivity : ComponentActivity() {
                 Surface(Modifier.fillMaxSize()) {
                     MessageCard(
                         msg = Message(
-                            "Author",
-                            "Aprendendo compose no Android"
+                            "Author", "Aprendendo compose no Android"
                         )
                     )
                 }
@@ -44,8 +43,7 @@ class MainActivity : ComponentActivity() {
 }
 
 data class Message(
-    val author: String,
-    val body: String
+    val author: String, val body: String
 )
 
 @Composable
@@ -63,10 +61,19 @@ fun MessageCard(msg: Message) {
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Column { // vertical
-                    Text(text = msg.author,
-                        color = MaterialTheme.colorScheme.secondary)
+                    Text(
+                        text = msg.author,
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.titleSmall
+                    )
                     Spacer(modifier = Modifier.height(10.dp)) // space between items
-                    Text(text = msg.body)
+                    Surface(
+                        shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp
+                    ) {
+                        Text(
+                            text = msg.body, style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }
@@ -78,8 +85,7 @@ fun MessageCard(msg: Message) {
 fun PreviewMessageCard() {
     MessageCard(
         msg = Message(
-            "Rachel",
-            "Aprendendo Compose"
+            "Rachel", "Aprendendo Compose"
         )
     )
 }
